@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact Form{% endblock %}
+{% block stylesheets %}
+<style>
+    li{ 
+    list-style-type: none;
+    color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h3 class="text-center my-5"> Ajouter une tâche au projet "{{ currentProject.name }}"</h3>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            {{ form_start(taskForm) }}
+                <div class="text-danger">
+                    {{ form_errors(taskForm) }}
+                </div>
+                {{ form_widget(taskForm) }}
+            {{ form_end(taskForm) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+Pour encoder un mot de pass manuellement =>
+    php bin/console security:encode-password mon_mot_de_passe
+
+
+API: 
+
+Getall => path: /api/project
+GetOne => path: /api/project/id

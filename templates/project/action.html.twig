@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Action {% endblock %}
+{% block stylesheets %}
+<style>
+    li{ 
+    list-style-type: none;
+    color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-6">
+            <h1> Project: {{ project.name }} </h1>
+            <div> Créé le: {{ project.startedAt | date("d/m/Y")}} </div>
+            <div> Nombre de tâches: {{ project.tasks | length }} </div>
+        </div>
+        <div class="col-4">
+            {# symfony form for editing #}
+            {{ form_start(editForm) }}
+                <div class="text-danger">
+                    {{ form_errors(editForm) }}
+                </div>
+                {{ form_widget(editForm) }}
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+    {% if project.status != 'done' %} 
+    <div class="row my-3 mx-2">
+        <a href="{{ path('task_add', {projectId: project.id}) }}" class="btn btn-outline-success">Ajouter une tâche</a>
+    </div>
+    {% endif %}
+
+    <table class="table my-3">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col" class="align-middle">Nom de la tâche</th>
+                <th scope="col" class="align-middle">Description</th>
+                <th scope="col" class="align-middle">Ajouté le</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in project.tasks %}
+            <tr class="text-center">
+                <td> {{ task.title }} </td>
+                <td> {{ task.description }} </td>
+                <td> {{ task.createdAt | date("d/m/Y")}} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if project.tasks is empty %}
+    <div class="row justify-content-center my-3">
+        <div class="col-8">
+            <div class="alert alert-info"> No task created yet for this project!! </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+
+
+{# form status à la main
+<h5> Status du projet: </h5>
+    <form class="form-inline my-2" action="{{ path('project_action', {projectId: project.id} ) }}" method="post">
+    {% if project.status != 'done' %} 
+    <select class="form-control" name="status">
+        <option value="new" {% if project.status == 'new' %} selected {% endif %}> Nouveau </option>
+        <option value="ongoing" {% if project.status == 'ongoing' %} selected {% endif %}> En cours </option>
+        <option value="done" {% if project.status == 'done' %} selected {% endif %}> Terminé </option>                   
+    </select>
+    <input type="submit" value="Changer" class="btn btn-dark ml-2"> 
+    {% else %}
+    <div class="alert alert-info"> Projet est déjà terminé </div>
+    {% endif %}
+</form> #}

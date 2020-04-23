@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact Form{% endblock %}
+{% block stylesheets %}
+<style>
+    li{ 
+    list-style-type: none;
+    color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+        <h3 class="text-center"> Ajouter un projet </h3>
+            {{ form_start(projetForm) }}
+                <div class="text-danger">
+                    {{ form_errors(projetForm) }}
+                </div>
+                {{ form_widget(projetForm) }}
+            {{ form_end(projetForm) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

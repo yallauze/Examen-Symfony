@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Projet {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center my-3">
+        <h3 class="text-center">Liste de projets</h3>
+    </div>
+    <div class="row my-3 mx-2">
+        <a href="{{ path('project_add') }}" class="btn btn-outline-success">Ajouter un projet</a>
+    </div>
+    <table class="table my-3">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col" class="align-middle">Nom du projet</th>
+                <th scope="col" class="align-middle">Status</th>
+                <th scope="col" class="align-middle">Nb de tâches</th>
+                <th scope="col" class="align-middle">Ajouté le</th>
+                <th scope="col" class="align-middle">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr class="text-center">
+                <td> {{ project.name }} </td>
+                <td> 
+                {% if project.status == 'new' %}Nouveau{% endif %}
+                {% if project.status == 'ongoing' %}En cours{% endif %}
+                {% if project.status == 'done' %}Terminé{% endif %}
+                </td>
+                <td> {{ project.tasks | length }} </td>
+                <td> {{ project.startedAt | date("d/m/Y")}} </td>
+                <td> <a href="{{ path('project_action', {projectId: project.id}) }}" class="btn btn-outline-info"> Gérer </a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if projects is empty %}
+    <div class="row justify-content-center my-3">
+        <div class="col-8">
+            <div class="alert alert-info"> No projets yet in the database!! </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
